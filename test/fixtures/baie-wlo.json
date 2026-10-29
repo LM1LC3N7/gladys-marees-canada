@@ -1,0 +1,541 @@
+[
+ {
+  "eventDate": "2026-10-29T20:00:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.408
+ },
+ {
+  "eventDate": "2026-10-29T20:01:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.426
+ },
+ {
+  "eventDate": "2026-10-29T20:02:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.435
+ },
+ {
+  "eventDate": "2026-10-29T20:03:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.437
+ },
+ {
+  "eventDate": "2026-10-29T20:04:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.437
+ },
+ {
+  "eventDate": "2026-10-29T20:05:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.444
+ },
+ {
+  "eventDate": "2026-10-29T20:06:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.46
+ },
+ {
+  "eventDate": "2026-10-29T20:07:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.478
+ },
+ {
+  "eventDate": "2026-10-29T20:08:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.491
+ },
+ {
+  "eventDate": "2026-10-29T20:09:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.494
+ },
+ {
+  "eventDate": "2026-10-29T20:10:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.493
+ },
+ {
+  "eventDate": "2026-10-29T20:11:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.497
+ },
+ {
+  "eventDate": "2026-10-29T20:12:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.511
+ },
+ {
+  "eventDate": "2026-10-29T20:13:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.529
+ },
+ {
+  "eventDate": "2026-10-29T20:14:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.544
+ },
+ {
+  "eventDate": "2026-10-29T20:15:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.549
+ },
+ {
+  "eventDate": "2026-10-29T20:16:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.548
+ },
+ {
+  "eventDate": "2026-10-29T20:17:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.55
+ },
+ {
+  "eventDate": "2026-10-29T20:18:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.561
+ },
+ {
+  "eventDate": "2026-10-29T20:19:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.578
+ },
+ {
+  "eventDate": "2026-10-29T20:20:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.594
+ },
+ {
+  "eventDate": "2026-10-29T20:21:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.602
+ },
+ {
+  "eventDate": "2026-10-29T20:22:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.602
+ },
+ {
+  "eventDate": "2026-10-29T20:23:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.602
+ },
+ {
+  "eventDate": "2026-10-29T20:24:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.61
+ },
+ {
+  "eventDate": "2026-10-29T20:25:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.626
+ },
+ {
+  "eventDate": "2026-10-29T20:26:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.643
+ },
+ {
+  "eventDate": "2026-10-29T20:27:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.653
+ },
+ {
+  "eventDate": "2026-10-29T20:28:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.654
+ },
+ {
+  "eventDate": "2026-10-29T20:29:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.653
+ },
+ {
+  "eventDate": "2026-10-29T20:30:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.658
+ },
+ {
+  "eventDate": "2026-10-29T20:31:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.672
+ },
+ {
+  "eventDate": "2026-10-29T20:32:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.689
+ },
+ {
+  "eventDate": "2026-10-29T20:33:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.701
+ },
+ {
+  "eventDate": "2026-10-29T20:34:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.704
+ },
+ {
+  "eventDate": "2026-10-29T20:35:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.703
+ },
+ {
+  "eventDate": "2026-10-29T20:36:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.705
+ },
+ {
+  "eventDate": "2026-10-29T20:37:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.716
+ },
+ {
+  "eventDate": "2026-10-29T20:38:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.733
+ },
+ {
+  "eventDate": "2026-10-29T20:39:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.747
+ },
+ {
+  "eventDate": "2026-10-29T20:40:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.752
+ },
+ {
+  "eventDate": "2026-10-29T20:41:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.751
+ },
+ {
+  "eventDate": "2026-10-29T20:42:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.751
+ },
+ {
+  "eventDate": "2026-10-29T20:43:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.759
+ },
+ {
+  "eventDate": "2026-10-29T20:44:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.775
+ },
+ {
+  "eventDate": "2026-10-29T20:45:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.79
+ },
+ {
+  "eventDate": "2026-10-29T20:46:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.798
+ },
+ {
+  "eventDate": "2026-10-29T20:47:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.797
+ },
+ {
+  "eventDate": "2026-10-29T20:48:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.795
+ },
+ {
+  "eventDate": "2026-10-29T20:49:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.8
+ },
+ {
+  "eventDate": "2026-10-29T20:50:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.814
+ },
+ {
+  "eventDate": "2026-10-29T20:51:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.83
+ },
+ {
+  "eventDate": "2026-10-29T20:52:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.84
+ },
+ {
+  "eventDate": "2026-10-29T20:53:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.841
+ },
+ {
+  "eventDate": "2026-10-29T20:54:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.838
+ },
+ {
+  "eventDate": "2026-10-29T20:55:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.84
+ },
+ {
+  "eventDate": "2026-10-29T20:56:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.852
+ },
+ {
+  "eventDate": "2026-10-29T20:57:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.868
+ },
+ {
+  "eventDate": "2026-10-29T20:58:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.88
+ },
+ {
+  "eventDate": "2026-10-29T20:59:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.883
+ },
+ {
+  "eventDate": "2026-10-29T21:00:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.88
+ },
+ {
+  "eventDate": "2026-10-29T21:01:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.879
+ },
+ {
+  "eventDate": "2026-10-29T21:02:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.888
+ },
+ {
+  "eventDate": "2026-10-29T21:03:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.903
+ },
+ {
+  "eventDate": "2026-10-29T21:04:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.916
+ },
+ {
+  "eventDate": "2026-10-29T21:05:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.921
+ },
+ {
+  "eventDate": "2026-10-29T21:06:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.919
+ },
+ {
+  "eventDate": "2026-10-29T21:07:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.916
+ },
+ {
+  "eventDate": "2026-10-29T21:08:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.922
+ },
+ {
+  "eventDate": "2026-10-29T21:09:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.935
+ },
+ {
+  "eventDate": "2026-10-29T21:10:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.95
+ },
+ {
+  "eventDate": "2026-10-29T21:11:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.957
+ },
+ {
+  "eventDate": "2026-10-29T21:12:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.956
+ },
+ {
+  "eventDate": "2026-10-29T21:13:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.952
+ },
+ {
+  "eventDate": "2026-10-29T21:14:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.954
+ },
+ {
+  "eventDate": "2026-10-29T21:15:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.965
+ },
+ {
+  "eventDate": "2026-10-29T21:16:00Z",
+  "qcFlagCode": "1",
+  "reviewed": false,
+  "timeSeriesId": "c0c0c0c0c0c0c0c0c0c0c0c0",
+  "value": 2.98
+ }
+]

@@ -1,67 +1,148 @@
-# Template de démonstration
+# Les marées du Canada dans Gladys (Marées Canada)
 
-Ceci est la documentation utilisateur de l'intégration. Gladys ré-héberge ce
-fichier et affiche un lien **Documentation** permanent vers lui dans l'écran
-de configuration (dans la langue de l'utilisateur, avec l'anglais en repli) —
-c'est au moment de configurer que l'utilisateur en a le plus besoin. Gardez
-les courtes indications d'accueil dans les blocs `section` du `config_schema`
-du manifest ; mettez ici le pas-à-pas détaillé (captures d'écran, dépannage…).
+> **Pas pour la navigation.** Les prédictions de marée viennent du Service
+> hydrographique du Canada (SHC) ; pour une sortie en bateau, la pêche ou
+> toute activité sur l'eau, suivez les tables des marées, les cartes et les
+> avis officiels du SHC ([marees.gc.ca](https://www.marees.gc.ca)).
+
+Connecteur non officiel, sans lien avec Pêches et Océans Canada et non
+approuvé par le Service hydrographique du Canada. Il amène dans Gladys les
+stations de marée et de niveau d'eau du SHC : Halifax, Saint John, Rimouski,
+Québec, le Saint-Laurent, Victoria, Vancouver, Tofino, les Grands Lacs,
+l'Arctique et environ 1 000 autres stations.
+
+> **État : essayé contre le vrai service dans un Gladys de test, mais il
+> n'a jamais été lancé par une installation Gladys en service.** Le
+> 2026-10-29, le module a tourné contre la vraie API IWLS (lectures seules)
+> dans un Gladys de test local (appareils découverts, statut, bouton de
+> test), et ses tests rejouent des réponses de même forme (synthétiques :
+> aucune donnée du SHC dans ce dépôt). Les scènes et le tableau de bord n'ont pas été essayés. Merci de signaler ce
+> que vous voyez.
+
+Source : Service hydrographique du Canada, API IWLS (Integrated Water Level
+System, système intégré des niveaux d'eau). Données publiques, sans compte,
+sans clé.
 
 ## Ce que vous obtenez
 
-Six appareils de démonstration apparaissent après l'installation : une
-station météo (vraies données Open-Meteo), un interrupteur, une lampe
-variable, une prise connectée avec mesure de puissance, un détecteur de
-mouvement et une caméra.
+Un appareil par station, avec ce que la station a : jusqu'à 10 fonctions
+pour une station qui a prédictions, pleines et basses mers et marégraphe
+(`wlp`, `wlp-hilo`, `wlo`) ; moins sinon (un limnimètre de lac sans
+prédiction en a 3 ; une station sans prédiction des pleines et basses mers
+n'a ni « prochaine marée » ni événement de marée) :
+
+| Fonction                            | Unité             | Remarques                                                                                                                                                                                              |
+| ----------------------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Niveau d'eau prédit                 | m                 | Le niveau prédit officiel, un point toutes les 15 minutes (le dernier en vigueur), pour un historique léger. Gladys garde la dernière valeur si le service ne donne plus la courbe (le statut le dit). |
+| Hauteur de la prochaine pleine mer  | m                 | D'après les prédictions officielles des pleines et basses mers.                                                                                                                                        |
+| Prochaine pleine mer                | texte             | Son heure dans le fuseau de la station, avec l'abréviation (« 2026-10-29 23:25 ADT »), quel que soit le fuseau de votre Gladys.                                                                        |
+| Minutes avant la pleine mer         | minutes           | Mis à jour chaque minute ; 0 à l'heure de la marée.                                                                                                                                                    |
+| Basse mer : hauteur, heure, minutes | m, texte, minutes | Pareil pour la basse mer.                                                                                                                                                                              |
+| Niveau d'eau observé                | m                 | Seulement les stations qui mesurent (un marégraphe en service). La dernière mesure, publiée tant qu'elle a moins de 2 heures et n'est pas jugée douteuse.                                              |
+| Heure de l'observation              | texte             | L'heure de cette mesure, heure de la station.                                                                                                                                                          |
+| Écart observé - prédit              | m                 | L'écart entre la mesure et la prédiction au même instant (une onde de tempête, une rivière en crue…).                                                                                                  |
+
+Les hauteurs sont en mètres au-dessus du zéro des cartes de la station (la
+référence des cartes marines et des tables des marées, proche des plus basses
+mers), telles que le SHC les donne : aucune conversion. Une valeur que le
+service ne donne pas n'est pas publiée (jamais un 0). Une fois l'appareil
+créé, une fonction ne disparaît plus de lui.
 
 ## Configuration
 
-1. Ouvrez l'onglet **Configuration** de l'intégration.
-2. Renseignez la **latitude** et la **longitude** que la station météo de
-   démonstration doit observer (Paris par défaut), et choisissez votre unité
-   de température. L'**intervalle de rafraîchissement** règle la fréquence
-   de lecture de la station météo et de la puissance de la prise : toutes
-   les 5 minutes par défaut, toutes les minutes au plus.
-3. Enregistrez : les appareils apparaissent dans l'onglet **Découverte**,
-   prêts à être ajoutés.
-
-Le réglage **Préférer la connexion locale** pilote la prise de
-démonstration : elle affiche en badge le canal réellement utilisé (local ou
-cloud), avec un point orange quand elle fonctionne en mode dégradé (local
-refusé, bascule cloud).
-
-## Actions
-
-- **Tester le fournisseur météo** — effectue une requête en direct vers
-  Open-Meteo et affiche la température et l'humidité actuelles sous le
-  bouton.
-- **Identifier un appareil** — choisissez un de vos appareils dans la liste
-  et il se signale (la lampe de démonstration « clignote » dans les logs).
+1. Installez l'intégration depuis le store, puis ouvrez sa configuration.
+2. **Stations** : codes de stations du SHC (5 chiffres), séparés par des
+   virgules, par exemple `00490, 02985` (Halifax, Rimouski). `490` est lu
+   `00490`. 20 stations au maximum.
+3. Pour trouver un code, tapez un lieu dans le bouton **Chercher des
+   stations** (par exemple `Rimouski`, `Saint-Joseph`, `Tofino`), ou
+   utilisez la [carte des stations du SHC](https://www.marees.gc.ca/fr/stations).
+4. **Observations lues toutes les** : 10 minutes par défaut, de 5 à 60.
+   Seules les stations qui mesurent sont lues aussi souvent ; les
+   prédictions sont lues toutes les 6 heures (48 heures de courbe, 72 heures
+   de pleines et basses mers), et la station elle-même (nom, fuseau, avis)
+   une fois par semaine.
+5. Cliquez sur **Tester les stations**, puis ajoutez les appareils depuis
+   l'onglet Découverte.
 
 ## Scènes
 
-L'intégration ajoute ses propres cartes à l'éditeur de scènes (Gladys 5.1
-ou plus récent), dans la catégorie **Intégrations** :
+Un déclencheur, **Pleine ou basse mer (Marées Canada)** : une pleine ou basse
+mer prédite d'une station arrive dans le délai choisi : 3 heures, 2 heures,
+1 heure, 30 ou 15 minutes avant, ou à l'heure de la marée. Choisissez la
+station, la marée (pleine ou basse) et quand. Il donne la station, la
+hauteur prédite, l'heure de la marée (heure de la station), les minutes
+restantes et un résumé en anglais et en français.
 
-- **Mouvement détecté** (déclencheur) — lance la scène quand un détecteur
-  de démonstration voit bouger quelque chose. Choisissez éventuellement le
-  détecteur et ce qui a bougé (personne, animal) ; laissés vides, toute
-  détection correspond. Les actions suivantes peuvent lire ce qui a bougé
-  avec `{{triggerEvent.data.target}}`.
-- **Identifier un appareil** (action) — fait se signaler l'appareil choisi.
-  Elle indique si l'appareil a pu se signaler, pour que les actions
-  suivantes puissent en dépendre.
+- Il suit les **prédictions**, pas les observations : une tempête peut
+  amener l'eau plus tôt ou plus haut. Pas pour la navigation.
+- Un événement par marée et par « quand », retenu dans `/data` : pas envoyé
+  deux fois, même après un redémarrage.
+- Un événement part avec au plus 10 minutes de retard (conteneur arrêté,
+  Gladys qui redémarre) ; au-delà, il est abandonné, une alerte en retard
+  étant une fausse alerte.
+- Pour un niveau (le niveau observé au-dessus de 4 m, par exemple), utilisez
+  le déclencheur d'appareil habituel sur la fonction.
 
-## Tableau de bord
+## Limites et comportement
 
-Ajoutez le widget **État de la démo** à un tableau de bord : il affiche en
-direct la température de la station météo et la puissance de la prise du
-bureau, la connexion utilisée par la prise (en orange si dégradée) et la
-position observée. Son bouton **Identifier la lampe** fait se signaler la
-lampe de démonstration.
+- **Un marégraphe muet.** Certaines stations cessent de mesurer pendant des
+  heures (Halifax le soir du 2026-10-29) : le niveau observé n'est alors pas
+  publié, le statut nomme la station, et les prédictions continuent. Gladys
+  garde la dernière valeur observée reçue : regardez « Heure de
+  l'observation ».
+- Une requête à la fois, espacées d'au moins 6 secondes : 10 par minute, le
+  tiers des 30 que l'API permet par adresse (plusieurs installations peuvent
+  partager une adresse). Un premier démarrage avec 20 stations prend environ
+  10 minutes.
+- L'API ne donne ni ETag ni Last-Modified : chaque lecture ne demande que ce
+  qui est nouveau (les observations depuis la dernière).
+- Si le service répond « trop de requêtes » (429), l'intégration se met en
+  pause le temps demandé (d'une minute à six heures), même à travers un
+  redémarrage. Un échec ne la fait jamais lire plus tôt, reconnexions
+  comprises, et redémarrages aussi tant que `/data` est inscriptible
+  (l'instant de chaque lecture y est écrit avant la requête ; sans lui, un
+  conteneur redémarré attend quand même 6 secondes avant sa première
+  requête). Une lecture en échec est retentée après 2 minutes, puis 4, 8…
+  (30 minutes au plus pour les prédictions, une heure pour la station) ; un
+  429 n'ajoute pas cette attente à sa pause ; le bouton de test redemande une
+  minute après le dernier essai ; un identifiant de station que le service ne
+  connaît plus est recherché à nouveau, une fois par jour au plus.
+- Une partie qui échoue sur une autre erreur qu'un 429 (les métadonnées,
+  les pleines et basses mers) n'arrête pas les autres : sans les
+  métadonnées, les heures sont affichées en UTC, ce que dit le bouton de
+  test.
+- Si Gladys ne donne pas la configuration, l'intégration le dit dans son
+  statut et la redemande après 1 minute, puis 2, 4… jusqu'à 30, sans fin.
+- Si l'horloge du conteneur s'écarte de plus de 5 minutes de celle du
+  service, le statut le dit : les comptes à rebours et les événements de
+  marée suivent l'horloge du conteneur.
+- Rien n'est envoyé que les codes et identifiants des stations.
+  L'intégration n'écrit que son fichier d'état dans `/data`, de façon
+  asynchrone (un `/data` figé ne la fige jamais) ; un fichier d'état
+  illisible est laissé tel quel et relu au démarrage suivant ; un fichier qui
+  n'est pas du JSON valide est mis de côté sous
+  `marees-canada-state.json.bad`, et l'intégration repart de zéro (dit dans
+  le statut).
+- Une marée prédite ni plus haute ni plus basse que ses voisines, que la
+  courbe ne départage pas non plus, est écartée (aucun événement pour elle),
+  ce que dit le statut.
 
-## Dépannage
+## Crédits et licence des données
 
-L'intégration journalise tout ce qu'elle fait : consultez les logs de
-l'intégration depuis l'interface Gladys (ou `docker logs` sur l'hôte) avec
-`LOG_LEVEL=debug` pour le détail complet.
+Données : Service hydrographique du Canada, Pêches et Océans Canada, API
+IWLS. **Utiliser cette intégration vaut acceptation de
+l'[accord de licence du SHC](https://www.marees.gc.ca/fr/accord-de-licence)** :
+chaque installation lit l'API elle-même, comme « l'Utilisateur » de cette
+licence. En bref : pas pour la navigation, pas de produit dérivé
+commercial, le droit d'auteur des données reste à la Couronne. Si le SHC met
+fin à la licence (avis public sur son site), les utilisateurs doivent
+détruire leurs copies des données sous 15 jours : désinstallez
+l'intégration, ou supprimez son fichier d'état dans `/data` (il garde les
+prédictions et les dernières observations). L'avis que demande la licence
+(texte anglais de l'accord) :
+
+> This product is not to be used for navigation. This product was made by or for the User [the gladys-marees-canada project] and contains intellectual property (Data) of the Canadian Hydrographic Service of the Department of Fisheries and Oceans. The copyrights in the Data are and remain the property of His Majesty the King in Right of Canada and shall not be sold, licensed, leased, assigned or given to a third party. The incorporation of the Data in this product does not constitute an endorsement or an approval of this product by the Canadian Hydrographic Service, the Department of Fisheries and Oceans or His Majesty the King in Right of Canada.
+
+Code : Apache-2.0, écrit d'après la description OpenAPI publiée de l'API
+IWLS. Voir `THIRD_PARTY_NOTICES.md`.

@@ -1,61 +1,135 @@
-# Demo Devices Template
+# Canadian tides for Gladys (Marées Canada)
 
-This is the user documentation of the integration. Gladys re-hosts this file
-and shows a permanent **Documentation** link to it in the Configuration screen
-(in the user's language, with English as the fallback) — it is when
-configuring that the user needs it most. Keep the short onboarding hints in
-the `section` blocks of the manifest `config_schema`; put the long
-step-by-step (screenshots, troubleshooting…) here.
+> **Not to be used for navigation.** The tide predictions come from the
+> Canadian Hydrographic Service (CHS); for boating, fishing or any outing on
+> the water, follow the official tide tables, charts and notices of the CHS
+> ([tides.gc.ca](https://www.tides.gc.ca)).
+
+Unofficial connector, not affiliated with Fisheries and Oceans Canada nor
+endorsed by the Canadian Hydrographic Service. It brings the tide and water
+level stations of the CHS into Gladys: Halifax, Saint John, Rimouski, Québec,
+the St. Lawrence, Victoria, Vancouver, Tofino, the Great Lakes, the Arctic and
+about 1,000 other stations.
+
+> **Status: tried against the real service in a test Gladys, but never
+> been run by a Gladys installation in use yet.** On 2026-10-29 the module
+> ran against the real IWLS API (read-only calls) inside a local test Gladys
+> (devices discovered, status, test button), and its tests replay
+> answers of the same shape (synthetic: no CHS Data in this repository).
+> Scenes and the dashboard were not tried. Please
+> report what you see.
+
+Source: Canadian Hydrographic Service, IWLS API (Integrated Water Level
+System). Public data, no account, no key.
 
 ## What you get
 
-Six demo devices show up after installation: a weather station (real data
-from Open-Meteo), a switch, a dimmable light, a smart plug with power
-metering, a motion sensor and a camera.
+One device per station, with what the station has: up to 10 features for
+a station with predictions, high and low tides and a tide gauge (`wlp`,
+`wlp-hilo`, `wlo`); fewer otherwise (a lake gauge with observations only has
+3; a station without high and low tide predictions has no "next tide" and
+no tide event):
+
+| Feature                             | Unit             | Notes                                                                                                                                                                                                 |
+| ----------------------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Predicted water level               | m                | The official predicted level, one point every 15 minutes (the last one in force), so its history stays small. Gladys keeps the last value if the service stops giving the curve (the status says so). |
+| Next high tide height               | m                | From the official high and low tide predictions.                                                                                                                                                      |
+| Next high tide                      | text             | Its time in the time zone of the station, with the abbreviation ("2026-10-29 23:25 ADT"), whatever the time zone of your Gladys.                                                                      |
+| Minutes to the next high tide       | minutes          | Updated every minute; 0 at the tide.                                                                                                                                                                  |
+| Next low tide height, time, minutes | m, text, minutes | The same for the low tide.                                                                                                                                                                            |
+| Observed water level                | m                | Only the stations that measure (a tide gauge in service). The last measurement, published while it is less than 2 hours old and not flagged questionable.                                             |
+| Observed at                         | text             | The time of that measurement, station time.                                                                                                                                                           |
+| Observed minus predicted            | m                | The gap between the measurement and the prediction at the same instant (a storm surge, a river in flood...).                                                                                          |
+
+Heights are in metres above the chart datum of the station (the reference of
+the nautical charts and tide tables, close to the lowest tides), as the CHS
+gives them: no conversion. A value the service does not give is not
+published (never a 0). Once a device is created, a feature never disappears
+from it.
 
 ## Configuration
 
-1. Open the **Configuration** tab of the integration.
-2. Set the **latitude** and **longitude** the demo weather station should
-   observe (they default to Paris), and pick your temperature unit.
-   The **refresh interval** sets how often the weather station and the
-   plug's power are read: every 5 minutes by default, every minute at most.
-3. Save: the devices appear in the **Discovery** tab, ready to be added.
-
-The **Prefer the local connection** toggle drives the demo plug: it reports
-the channel it actually uses as a badge (local or cloud), with an orange dot
-when it runs degraded (local refused, cloud fallback).
-
-## Actions
-
-- **Test the weather provider** — performs a live request to Open-Meteo and
-  shows the current temperature and humidity under the button.
-- **Identify a device** — pick one of your devices in the list and it will
-  signal itself (the demo light "blinks" in the logs).
+1. Install the integration from the store, then open its configuration.
+2. **Stations**: CHS station codes (5 digits), separated by commas, for
+   example `00490, 02985` (Halifax, Rimouski). `490` is read as `00490`. 20
+   stations at most.
+3. To find a code, type a place in the **Search stations** button (for
+   example `Rimouski`, `Saint-Joseph`, `Tofino`), or use the
+   [CHS station map](https://www.tides.gc.ca/en/stations).
+4. **Observations read every**: 10 minutes by default, 5 to 60. Only the
+   stations that measure are read that often; the predictions are read every
+   6 hours (48 hours of curve, 72 hours of high and low tides), and the
+   station itself (name, time zone, notices) once a week.
+5. Click **Test the stations**, then add the devices from the Discovery tab.
 
 ## Scenes
 
-The integration adds its own cards to the scene editor (Gladys 5.1 or
-later), under the **Integrations** category:
+One trigger, **High or low tide (Marées Canada)**: a predicted high or low
+tide of a station is at the chosen time ahead: 3 hours, 2 hours, 1 hour, 30
+or 15 minutes before, or at the tide. Choose the station, the tide (high or
+low) and when. It gives the station, the predicted height, the time of the
+tide (station time), the minutes left and a summary in English and French.
 
-- **Motion detected** (trigger) — starts the scene when a demo motion sensor
-  sees something move. Optionally pick the sensor and what moved (person,
-  animal); left empty, any detection matches. The following actions can
-  read what moved with `{{triggerEvent.data.target}}`.
-- **Identify a device** (action) — makes the chosen device signal itself.
-  It returns whether the device could signal itself, so the following
-  actions can depend on it.
+- It follows the **predictions**, not the observations: a storm can bring
+  the water earlier or higher. Not for navigation.
+- One event per tide and per "when", remembered in `/data`: not sent twice, even after a restart.
+- An event is sent at most 10 minutes late (the container was stopped,
+  Gladys restarting); later, it is dropped, a late warning being a wrong one.
+- For a level (the observed level above 4 m, say), use the usual device
+  trigger on the feature.
 
-## Dashboard
+## Limits and behavior
 
-Add the **Demo status** widget to a dashboard: it shows the live
-temperature of the weather station and the power of the office plug, the
-connection the plug currently uses (orange when degraded) and the observed
-location. Its **Identify the light** button makes the demo light signal
-itself.
+- **A silent tide gauge.** Some stations stop measuring for hours (Halifax on
+  the evening of 2026-10-29): the observed level is then not published, the
+  status names the station, and the predictions go on. Gladys keeps showing
+  the last observed value it received: check "Observed at".
+- One request at a time, 6 seconds apart at least: 10 a minute, a third of
+  the 30 the API allows per address (several installations may share one
+  address). A first start with 20 stations takes about 10 minutes.
+- The API gives neither ETag nor Last-Modified: each read asks only what is
+  new (the observations since the last one).
+- If the service answers "too many requests" (429), the integration pauses
+  for the time it asks (one minute to six hours), even across restarts. A
+  failure never makes it read sooner, reconnections included, and restarts
+  too while `/data` is writable (the instant of each read is written there
+  before the request; without it, a restarted container still waits 6
+  seconds before its first request). A failed read is tried again after 2
+  minutes, then 4, 8... (30 minutes at most for the predictions, an hour for
+  the station); a 429 does not add that wait to its pause; the test button
+  asks again a minute after the last try; a station id the service no longer
+  knows is looked up again, once a day at most.
+- A part that fails with an error other than a 429 (the metadata, the high
+  and low tides) does not stop the others: without the metadata, times are
+  shown in UTC, said in the test button.
+- If Gladys does not give the configuration, the integration says it in its
+  status and asks again after 1 minute, then 2, 4... up to 30, without end.
+- If the clock of the container drifts more than 5 minutes from the clock of
+  the service, the status says it: the countdowns and the tide events follow
+  the container clock.
+- Nothing is sent but the station codes and ids. The integration writes only
+  its state file in `/data`, asynchronously (a frozen `/data` never freezes
+  it); a state file it cannot read is left untouched and read again at the
+  next start; one that is not valid JSON is set aside as
+  `marees-canada-state.json.bad`, and the integration starts afresh (said in
+  the status).
+- A predicted tide that is neither higher nor lower than its neighbours, the
+  curve not telling either, is left out (no tide event for it), said in the
+  status.
 
-## Troubleshooting
+## Credits and licence of the data
 
-The integration logs everything it does: check the integration logs from the
-Gladys UI (or `docker logs` on the host) with `LOG_LEVEL=debug` for the full
-detail.
+Data: Canadian Hydrographic Service, Fisheries and Oceans Canada, IWLS API.
+**Using this integration means accepting the
+[CHS licence agreement](https://www.tides.gc.ca/en/licence-agreement)**: each
+installation reads the API itself, as "the User" of that licence. In short:
+not for navigation, no commercial derivative product, the copyright of the
+Data stays with the Crown. If CHS ends the licence (a public notice on its
+website), the users must destroy their copies of the Data within 15 days:
+uninstall the integration, or delete its state file in `/data` (it keeps the
+predictions and the last observations). The notice the licence asks for:
+
+> This product is not to be used for navigation. This product was made by or for the User [the gladys-marees-canada project] and contains intellectual property (Data) of the Canadian Hydrographic Service of the Department of Fisheries and Oceans. The copyrights in the Data are and remain the property of His Majesty the King in Right of Canada and shall not be sold, licensed, leased, assigned or given to a third party. The incorporation of the Data in this product does not constitute an endorsement or an approval of this product by the Canadian Hydrographic Service, the Department of Fisheries and Oceans or His Majesty the King in Right of Canada.
+
+Code: Apache-2.0, written from the published OpenAPI description of the IWLS
+API. See `THIRD_PARTY_NOTICES.md`.

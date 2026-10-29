@@ -1,0 +1,9 @@
+{
+ "timestamp": "2026-10-29T21:07:07.842012831Z",
+ "status": "400 BAD_REQUEST",
+ "message": "Constraints not respected",
+ "path": "/api/v1/stations/b0b0b0b0b0b0b0b0b0b09712/data",
+ "errors": [
+  "2026-10-01T18:00:00Z / 2026-10-30T12:00:00Z: date interval should not be bigger than 7 days"
+ ]
+}

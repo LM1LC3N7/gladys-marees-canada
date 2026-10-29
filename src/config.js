@@ -1,45 +1,90 @@
 // -----------------------------------------------------------------------------
-// Integration configuration.
-//
-// The configuration is filled in by the user in Gladys, from the `config_schema`
-// declared in `gladys-assistant-integration.json`. The SDK fetches it for you
-// (`gladys.getConfig()`) and notifies you of every change through
-// `gladys.onConfigUpdated()`.
-//
-// This module only provides defaults and normalizes the received object, so the
-// rest of the code never has to deal with `undefined`.
+// The configuration the user fills (manifest `config_schema`), normalized so
+// the rest of the code never deals with strings or `undefined`.
 // -----------------------------------------------------------------------------
 
-// Defaults: they MUST stay consistent with the `default` values declared in the
-// `config_schema` of the manifest.
+import { MAX_POLL_MINUTES, MAX_STATIONS, MIN_POLL_MINUTES } from './constants.js';
+
+// Defaults: they MUST match the `default` values of the manifest
+// (test/manifest.test.js checks it).
 export const DEFAULT_CONFIG = {
-  latitude: 48.8566, // Paris
-  longitude: 2.3522,
-  unit: 'celsius', // 'celsius' | 'fahrenheit'
-  // Seconds between two reads of the polled sensors. Gladys polls at most once
-  // a minute: slower intervals are applied by skipping polls (see
-  // createPoller in src/devices/index.js).
-  poll_frequency: 300,
-  // Reserved key (NOT in config_schema): because the manifest declares both
-  // 'local' and 'cloud' in its `transports` field, Gladys shows a standard
-  // "Prefer the local connection" toggle and sends the user's choice here.
-  // Read-only for the integration; defaults to true.
-  GLADYS_PREFER_LOCAL: true,
+  stations: '',
+  poll_interval: 10,
 };
 
 /**
- * Merge the user config with the defaults.
- * @param {Record<string, unknown>} raw config returned by the SDK
+ * A station code of the Canadian Hydrographic Service: 5 digits ("00490").
+ * "490" is "00490" (the leading zeros are often dropped); anything else is
+ * refused.
  */
+export function stationCode(value) {
+  const text = String(value ?? '').trim();
+  if (!/^[0-9]{1,5}$/.test(text)) {
+    return null;
+  }
+  const code = text.padStart(5, '0');
+  return code === '00000' ? null : code;
+}
+
+/** "Rivière-du-Loup" -> "riviere du loup": lower case, no accents, words only. */
+export function searchable(text) {
+  return String(text ?? '')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+/**
+ * "00490, 7120; 03250" -> the codes (separated by `,`, `;`, spaces or line
+ * breaks), without duplicates, and the entries that are not a code (shown in
+ * the status, never used).
+ */
+export function parseStations(text) {
+  const codes = [];
+  const invalid = [];
+  for (const entry of String(text ?? '').split(/[,;\s]+/)) {
+    const value = entry.trim().slice(0, 40);
+    if (!value) {
+      continue;
+    }
+    const code = stationCode(value);
+    if (code) {
+      if (!codes.includes(code)) {
+        codes.push(code);
+      }
+    } else if (invalid.length < 5) {
+      invalid.push(value);
+    }
+  }
+  return { codes, invalid };
+}
+
+const number = (value, fallback, min, max) => {
+  const n =
+    typeof value === 'number'
+      ? value
+      : typeof value === 'string' && value.trim() !== ''
+        ? Number(value)
+        : NaN;
+  return value !== '' && Number.isFinite(n)
+    ? Math.min(max, Math.max(min, Math.round(n)))
+    : fallback;
+};
+
 export function normalizeConfig(raw = {}) {
+  const source = raw && typeof raw === 'object' ? raw : {};
+  const { codes, invalid } = parseStations(source.stations ?? DEFAULT_CONFIG.stations);
   return {
-    ...DEFAULT_CONFIG,
-    ...raw,
-    // Force the types: config may arrive as strings from a form.
-    latitude: Number(raw.latitude ?? DEFAULT_CONFIG.latitude),
-    longitude: Number(raw.longitude ?? DEFAULT_CONFIG.longitude),
-    poll_frequency: Number(raw.poll_frequency ?? DEFAULT_CONFIG.poll_frequency),
-    // The preference is a boolean; anything but an explicit false means true.
-    GLADYS_PREFER_LOCAL: raw.GLADYS_PREFER_LOCAL !== false,
+    codes: codes.slice(0, MAX_STATIONS),
+    dropped: Math.max(0, codes.length - MAX_STATIONS),
+    invalid,
+    pollMinutes: number(
+      source.poll_interval,
+      DEFAULT_CONFIG.poll_interval,
+      MIN_POLL_MINUTES,
+      MAX_POLL_MINUTES,
+    ),
   };
 }

@@ -1,0 +1,24 @@
+{
+ "chsRegionCode": "PAC",
+ "classCode": "B",
+ "code": "97120",
+ "datums": [
+  {
+   "code": "CGVD2013",
+   "offset": -1,
+   "offsetPrecision": 2
+  }
+ ],
+ "id": "b0b0b0b0b0b0b0b0b0b09712",
+ "isTidal": true,
+ "officialName": "Baie-Imaginaire",
+ "operating": true,
+ "owner": "CHS-SHC",
+ "provinceCode": "BC",
+ "publicNotificationEn": "",
+ "publicNotificationFr": "",
+ "status": "OK",
+ "timeZoneCode": "Canada/Pacific",
+ "type": "PERMANENT",
+ "waterBody": "BAY"
+}

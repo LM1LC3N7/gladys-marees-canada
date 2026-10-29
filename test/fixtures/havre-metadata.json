@@ -1,0 +1,24 @@
+{
+ "chsRegionCode": "ATL",
+ "classCode": "B",
+ "code": "90490",
+ "datums": [
+  {
+   "code": "CGVD2013",
+   "offset": -1,
+   "offsetPrecision": 2
+  }
+ ],
+ "id": "a0a0a0a0a0a0a0a0a0a09049",
+ "isTidal": true,
+ "officialName": "Havre-Fictif",
+ "operating": true,
+ "owner": "CHS-SHC",
+ "provinceCode": "NS",
+ "publicNotificationEn": "Invented notice of a fictional port authority, for the tests only: the air draft figures of this fictional bridge are supplementary and do not replace the procedures of the fictional harbour master, who may ask for more checks at any time before a vessel passes under the bridge, and may delay or restrict the passage of any vessel.",
+ "publicNotificationFr": "Avis inventé d'une autorité portuaire fictive, pour les tests seulement : les tirants d'air de ce pont fictif sont complémentaires et ne remplacent pas les procédures de la capitainerie fictive, qui peut demander d'autres vérifications à tout moment avant le passage d'un navire sous le pont, et retarder ou restreindre ce passage.",
+ "status": "OK",
+ "timeZoneCode": "Canada/Atlantic",
+ "type": "PERMANENT",
+ "waterBody": "BAY"
+}

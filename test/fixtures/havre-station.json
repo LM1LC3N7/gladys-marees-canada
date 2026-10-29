@@ -1,0 +1,39 @@
+[
+ {
+  "chsRegionCode": "ATL",
+  "code": "90490",
+  "id": "a0a0a0a0a0a0a0a0a0a09049",
+  "latitude": 45,
+  "longitude": -64,
+  "officialName": "Havre-Fictif",
+  "operating": true,
+  "provinceCode": "NS",
+  "timeSeries": [
+   {
+    "code": "wlo",
+    "id": "d0d0d0d0d0d0d0d0d0d0d0d0",
+    "nameEn": "Water level official value",
+    "nameFr": "Niveau d'eau, valeur officielle",
+    "owner": "CHS-SHC",
+    "phenomenonId": "e0e0e0e0e0e0e0e0e0e0e0e0"
+   },
+   {
+    "code": "wlp",
+    "id": "d0d0d0d0d0d0d0d0d0d0d0d1",
+    "nameEn": "Water level predictions",
+    "nameFr": "Prédictions de niveaux d'eau",
+    "owner": "CHS-SHC",
+    "phenomenonId": "e0e0e0e0e0e0e0e0e0e0e0e0"
+   },
+   {
+    "code": "wlp-hilo",
+    "id": "d0d0d0d0d0d0d0d0d0d0d0d2",
+    "nameEn": "High and Low Tide Predictions",
+    "nameFr": "Prédictions de pleines et basses mers",
+    "owner": "CHS-SHC",
+    "phenomenonId": "e0e0e0e0e0e0e0e0e0e0e0e0"
+   }
+  ],
+  "type": "PERMANENT"
+ }
+]

@@ -1,101 +1,131 @@
 {
   "manifest_version": 1,
   "type": "device",
-  "name": "Demo Devices Template",
+  "name": "Marées Canada",
   "description": {
-    "en": "Starter template showing sensors, a switch, a dimmable light and a smart plug.",
-    "fr": "Template de démarrage : capteurs, interrupteur, lampe variable et prise connectée."
+    "en": "Unofficial connector: Canadian tides, high and low tides, observed water levels.",
+    "fr": "Connecteur non officiel : marées du Canada, pleines et basses mers, niveaux observés."
   },
-  "version": "1.0.0",
-  "docker_image": "ghcr.io/gladysassistant/integration-template-js:1.0.0",
+  "version": "0.1.0",
+  "docker_image": "ghcr.io/lm1lc3n7/gladys-marees-canada:0.1.0",
   "gladys_version": ">=5.1.0",
-  "cover_image": "https://raw.githubusercontent.com/GladysAssistant/integration-template-js/master/cover.png",
-  "categories": ["lighting", "security", "environment"],
-  "transports": ["local", "cloud"],
+  "cover_image": "https://raw.githubusercontent.com/LM1LC3N7/gladys-marees-canada/main/cover.png",
+  "categories": ["environment"],
+  "transports": ["cloud"],
   "config_schema": [
     {
       "key": "intro",
       "type": "section",
-      "label": { "en": "Getting started", "fr": "Pour commencer" },
+      "label": {
+        "en": "Canadian tides in Gladys",
+        "fr": "Les marées du Canada dans Gladys"
+      },
       "description": {
-        "en": "The demo weather station reads real data from the free Open-Meteo API: pick the coordinates to observe. No account, no API key.",
-        "fr": "La station météo de démonstration lit de vraies données via l'API gratuite Open-Meteo : choisissez les coordonnées à observer. Pas de compte, pas de clé d'API."
+        "en": "Not for navigation: follow the official tide tables and notices of the Canadian Hydrographic Service. Unofficial connector, not affiliated with Fisheries and Oceans Canada nor endorsed by the Canadian Hydrographic Service (CHS). For each station you choose (Halifax, Rimouski, Victoria, the St. Lawrence, the Great Lakes...), it brings into Gladys the predicted water level, the next high and low tides (height, time, minutes left), and, where the station measures, the observed level and its gap to the prediction. Scenes can start before a high or low tide. Public data of the CHS (IWLS API), no account; using it means accepting the CHS licence agreement (link below). Tried against the real service in a test Gladys, never run by a Gladys installation in use yet.",
+        "fr": "Pas pour la navigation : suivez les tables des marées et les avis officiels du Service hydrographique du Canada. Connecteur non officiel, sans lien avec Pêches et Océans Canada et non approuvé par le Service hydrographique du Canada (SHC). Pour chaque station choisie (Halifax, Rimouski, Victoria, le Saint-Laurent, les Grands Lacs…), il amène dans Gladys le niveau d'eau prédit, les prochaines pleine et basse mers (hauteur, heure, minutes restantes) et, là où la station mesure, le niveau observé et son écart à la prédiction. Des scènes peuvent se lancer avant une pleine ou une basse mer. Données publiques du SHC (API IWLS), sans compte ; l'utiliser vaut acceptation de l'accord de licence du SHC (lien ci-dessous). Essayé contre le vrai service dans un Gladys de test, jamais lancé par une installation Gladys en service pour l'instant."
       },
       "links": [
         {
-          "url": "https://open-meteo.com/en/docs",
-          "label": { "en": "Open-Meteo documentation", "fr": "Documentation Open-Meteo" }
+          "url": "https://www.tides.gc.ca/en/stations",
+          "label": {
+            "en": "CHS stations map",
+            "fr": "Carte des stations du SHC"
+          }
+        },
+        {
+          "url": "https://www.tides.gc.ca/en/licence-agreement",
+          "label": {
+            "en": "CHS licence agreement",
+            "fr": "Accord de licence du SHC"
+          }
+        },
+        {
+          "url": "https://github.com/LM1LC3N7/gladys-marees-canada/blob/main/docs/fr.md",
+          "label": {
+            "en": "Guide (French)",
+            "fr": "Guide (français)"
+          }
+        },
+        {
+          "url": "https://github.com/LM1LC3N7/gladys-marees-canada/blob/main/docs/en.md",
+          "label": {
+            "en": "Guide (English)",
+            "fr": "Guide (anglais)"
+          }
         }
       ]
     },
     {
-      "key": "latitude",
-      "type": "number",
-      "label": { "en": "Latitude", "fr": "Latitude" },
-      "description": {
-        "en": "Latitude used for the demo weather sensor.",
-        "fr": "Latitude utilisée par le capteur météo de démonstration."
+      "key": "stations",
+      "type": "string",
+      "label": {
+        "en": "Stations",
+        "fr": "Stations"
       },
-      "placeholder": { "en": "e.g. 48.8566", "fr": "ex. 48.8566" },
-      "required": true,
-      "default": 48.8566,
-      "min": -90,
-      "max": 90
-    },
-    {
-      "key": "longitude",
-      "type": "number",
-      "label": { "en": "Longitude", "fr": "Longitude" },
       "description": {
-        "en": "Longitude used for the demo weather sensor.",
-        "fr": "Longitude utilisée par le capteur météo de démonstration."
+        "en": "Station codes of the Canadian Hydrographic Service (5 digits), separated by commas (20 at most). The \"Search stations\" button gives them.",
+        "fr": "Codes de stations du Service hydrographique du Canada (5 chiffres), séparés par des virgules (20 au maximum). Le bouton « Chercher des stations » les donne."
       },
-      "placeholder": { "en": "e.g. 2.3522", "fr": "ex. 2.3522" },
-      "required": true,
-      "default": 2.3522,
-      "min": -180,
-      "max": 180
-    },
-    {
-      "key": "unit",
-      "type": "select",
-      "label": { "en": "Temperature unit", "fr": "Unité de température" },
-      "required": false,
-      "default": "celsius",
-      "options": [
-        { "value": "celsius", "label": { "en": "Celsius", "fr": "Celsius" } },
-        { "value": "fahrenheit", "label": { "en": "Fahrenheit", "fr": "Fahrenheit" } }
-      ]
-    },
-    {
-      "key": "poll_frequency",
-      "type": "number",
-      "label": { "en": "Refresh interval (s)", "fr": "Intervalle de rafraîchissement (s)" },
-      "description": {
-        "en": "How often sensors are polled, in seconds (one minute minimum).",
-        "fr": "Fréquence d'interrogation des capteurs, en secondes (une minute minimum)."
+      "placeholder": {
+        "en": "00490, 02985",
+        "fr": "00490, 02985"
       },
       "required": false,
-      "default": 300,
-      "min": 60,
-      "max": 3600
+      "default": ""
+    },
+    {
+      "key": "poll_interval",
+      "type": "number",
+      "label": {
+        "en": "Observations read every (minutes)",
+        "fr": "Observations lues toutes les (minutes)"
+      },
+      "description": {
+        "en": "For the stations that measure the water level. The predictions are read every 6 hours whatever this value.",
+        "fr": "Pour les stations qui mesurent le niveau d'eau. Les prédictions sont lues toutes les 6 heures quelle que soit cette valeur."
+      },
+      "required": false,
+      "default": 10,
+      "min": 5,
+      "max": 60
     }
   ],
   "actions": [
     {
-      "key": "test_weather",
-      "label": { "en": "Test the weather provider", "fr": "Tester le fournisseur météo" },
-      "timeout_seconds": 30
+      "key": "test_connection",
+      "timeout_seconds": 60,
+      "label": {
+        "en": "Test the stations",
+        "fr": "Tester les stations"
+      },
+      "description": {
+        "en": "Reads what is due (the observations, unless read less than a minute ago) and shows the values of every station.",
+        "fr": "Lit ce qui est dû (les observations, sauf si lues il y a moins d'une minute) et affiche les valeurs de chaque station."
+      }
     },
     {
-      "key": "identify",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
+      "key": "search_stations",
+      "timeout_seconds": 60,
+      "label": {
+        "en": "Search stations",
+        "fr": "Chercher des stations"
+      },
+      "description": {
+        "en": "Finds the stations of a place, with their codes.",
+        "fr": "Trouve les stations d'un lieu, avec leurs codes."
+      },
       "fields": [
         {
-          "key": "device",
-          "type": "select",
-          "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
+          "key": "query",
+          "type": "string",
+          "label": {
+            "en": "Place",
+            "fr": "Lieu"
+          },
+          "placeholder": {
+            "en": "e.g. Rimouski",
+            "fr": "ex. Rimouski"
+          },
           "required": true
         }
       ]
@@ -103,75 +133,163 @@
   ],
   "scene_triggers": [
     {
-      "key": "motion_detected",
-      "label": { "en": "Motion detected", "fr": "Mouvement détecté" },
+      "key": "tide_coming",
+      "label": {
+        "en": "High or low tide (Marées Canada)",
+        "fr": "Pleine ou basse mer (Marées Canada)"
+      },
       "description": {
-        "en": "A demo motion sensor saw a person or an animal move.",
-        "fr": "Un détecteur de démonstration a vu bouger une personne ou un animal."
+        "en": "A predicted high or low tide of a station is at the chosen time ahead (or now). Sent once per tide, at most 10 minutes late (otherwise dropped). Predictions, not for navigation.",
+        "fr": "Une pleine ou basse mer prédite d'une station arrive dans le délai choisi (ou maintenant). Envoyé une fois par marée, avec au plus 10 minutes de retard (sinon abandonné). Prédictions, pas pour la navigation."
       },
       "fields": [
         {
           "key": "device",
           "type": "select",
           "source": "devices",
-          "label": { "en": "Sensor", "fr": "Détecteur" }
+          "label": {
+            "en": "Station",
+            "fr": "Station"
+          },
+          "required": true
         },
         {
-          "key": "target",
-          "type": "multi_select",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" },
+          "key": "kind",
+          "type": "select",
+          "required": true,
+          "label": {
+            "en": "Tide",
+            "fr": "Marée"
+          },
           "options": [
-            { "value": "person", "label": { "en": "Person", "fr": "Personne" } },
-            { "value": "animal", "label": { "en": "Animal", "fr": "Animal" } }
+            {
+              "value": "high",
+              "label": {
+                "en": "High tide",
+                "fr": "Pleine mer"
+              }
+            },
+            {
+              "value": "low",
+              "label": {
+                "en": "Low tide",
+                "fr": "Basse mer"
+              }
+            }
+          ]
+        },
+        {
+          "key": "lead",
+          "type": "select",
+          "required": true,
+          "label": {
+            "en": "When",
+            "fr": "Quand"
+          },
+          "options": [
+            {
+              "value": "0",
+              "label": {
+                "en": "At the tide",
+                "fr": "À l'heure de la marée"
+              }
+            },
+            {
+              "value": "15",
+              "label": {
+                "en": "15 minutes before",
+                "fr": "15 minutes avant"
+              }
+            },
+            {
+              "value": "30",
+              "label": {
+                "en": "30 minutes before",
+                "fr": "30 minutes avant"
+              }
+            },
+            {
+              "value": "60",
+              "label": {
+                "en": "1 hour before",
+                "fr": "1 heure avant"
+              }
+            },
+            {
+              "value": "120",
+              "label": {
+                "en": "2 hours before",
+                "fr": "2 heures avant"
+              }
+            },
+            {
+              "value": "180",
+              "label": {
+                "en": "3 hours before",
+                "fr": "3 heures avant"
+              }
+            }
           ]
         }
       ],
       "variables": [
         {
-          "key": "target",
+          "key": "station",
           "type": "string",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" }
+          "label": {
+            "en": "Station code",
+            "fr": "Code de la station"
+          }
+        },
+        {
+          "key": "station_name",
+          "type": "string",
+          "label": {
+            "en": "Station",
+            "fr": "Station"
+          }
+        },
+        {
+          "key": "height",
+          "type": "number",
+          "label": {
+            "en": "Predicted height (m)",
+            "fr": "Hauteur prédite (m)"
+          }
+        },
+        {
+          "key": "tide_time",
+          "type": "string",
+          "label": {
+            "en": "Time of the tide (station time)",
+            "fr": "Heure de la marée (heure de la station)"
+          }
+        },
+        {
+          "key": "minutes_left",
+          "type": "number",
+          "label": {
+            "en": "Minutes left",
+            "fr": "Minutes restantes"
+          }
+        },
+        {
+          "key": "summary",
+          "type": "string",
+          "label": {
+            "en": "Summary (English)",
+            "fr": "Résumé (anglais)"
+          }
+        },
+        {
+          "key": "summary_fr",
+          "type": "string",
+          "label": {
+            "en": "Summary (French)",
+            "fr": "Résumé (français)"
+          }
         }
       ]
-    }
-  ],
-  "scene_actions": [
-    {
-      "key": "identify_device",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
-      "description": {
-        "en": "Make a device signal itself (the demo light blinks).",
-        "fr": "Fait se signaler un appareil (la lampe de démonstration clignote)."
-      },
-      "timeout_seconds": 15,
-      "fields": [
-        {
-          "key": "device",
-          "type": "select",
-          "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
-          "required": true
-        }
-      ],
-      "outputs": [
-        {
-          "key": "signalled",
-          "type": "boolean",
-          "label": { "en": "Device signalled", "fr": "Appareil signalé" }
-        }
-      ]
-    }
-  ],
-  "widgets": [
-    {
-      "key": "demo_status",
-      "label": { "en": "Demo status", "fr": "État de la démo" },
-      "description": {
-        "en": "Live temperature and plug power, plug connection and observed location.",
-        "fr": "Température et puissance en direct, connexion de la prise, position observée."
-      },
-      "icon": "activity",
-      "action_timeout_seconds": 15
     }
   ]
 }
