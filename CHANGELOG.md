@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-30
+
 ### Added
 
 - Tide and water level stations of the Canadian Hydrographic Service (IWLS
@@ -29,3 +31,6 @@ the notes of the version's GitHub Release.
   integration); a corrupt one set aside as `.bad`.
 - Using the integration means accepting the CHS licence agreement (said in
   the configuration and the docs); tests on synthetic answers only.
+
+[Unreleased]: https://github.com/LM1LC3N7/gladys-marees-canada/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/LM1LC3N7/gladys-marees-canada/releases/tag/v0.1.1
