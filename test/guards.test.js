@@ -682,3 +682,114 @@ test('the error of a station stays while nothing new is read', async (t) => {
   assert.equal(app.lastError?.kind, 'server');
   assert.match(app.gladys.fake.connectionStatus.message.en, /Last read failed/);
 });
+
+// --- Review r2 (I4') ------------------------------------------------------------------------------
+
+test('a try is written to /data before its request leaves, even after a quiet period (slow /data)', async (t) => {
+  const env = { saving: 0, early: 0, requests: 0 };
+  let mem;
+  const storage = {
+    load: async () => mem,
+    save: (value) =>
+      new Promise((resolve) => {
+        env.saving += 1;
+        env.clock.timers.setTimeout(() => {
+          mem = JSON.parse(JSON.stringify(value));
+          env.saving -= 1;
+          resolve();
+        }, 150);
+      }),
+  };
+  const service = iwlsService();
+  const handler = service.handler;
+  service.handler = (call) => {
+    env.requests += 1;
+    if (env.saving > 0) {
+      env.early += 1;
+    }
+    return handler(call);
+  };
+  const clock = testClock({ start: FIXTURE_NOW });
+  env.clock = clock;
+  const { app } = await setup(t, { storage, service, clock, config: { stations: '97120' } });
+  await app.start({ stations: '97120' });
+  await drain(app, clock);
+  const before = env.requests;
+  // The observations 10 minutes later: no request gap to wait behind.
+  for (let i = 0; i < 22; i += 1) {
+    await clock.advance(TICK);
+    await drain(app, clock);
+  }
+  assert.ok(env.requests > before, 'the observations were read again');
+  assert.equal(env.early, 0, 'no request while the save of its try was pending');
+});
+
+test('a station id refused on its data only: looked up once, then at most once a day', async (t) => {
+  const service = iwlsService();
+  const { app, clock } = await ready(t, { service, config: { stations: '97120' } });
+  service.fail = (call) => (/\/data$/.test(call.path) ? json({}, 404) : undefined);
+  const lookups = () => service.calls.filter((c) => c.query.code === BAIE.code).length;
+  const before = lookups();
+  for (let i = 0; i < 360; i += 1) {
+    await clock.advance(TICK);
+    await drain(app, clock);
+  }
+  const after = lookups() - before;
+  assert.ok(after >= 1 && after <= 2, `${after} lookups in 3 hours`);
+});
+
+test('a 429 on the high and low tides keeps the curve just read', async (t) => {
+  const service = iwlsService();
+  service.fail = (call) =>
+    call.query['time-series-code'] === 'wlp-hilo'
+      ? json({}, 429, { 'retry-after': '3600' })
+      : undefined;
+  const { app } = await ready(t, { service, config: { stations: '97120' } });
+  assert.ok(app.client.pausedFor() > 0);
+  assert.ok(app.state.data.get(BAIE.code)?.curve.length > 100);
+});
+
+test('the summary of a lead-0 event says "now"', () => {
+  const [event] = tideEvents({
+    station: { code: '97120', name: 'Baie-Imaginaire', timeZone: 'Canada/Pacific' },
+    extremes: [{ t: FIXTURE_NOW, v: 2.95, kind: 'high' }],
+    now: FIXTURE_NOW + MIN,
+    fired: new Map(),
+    device: 'x',
+  });
+  assert.equal(event.data.lead, '0');
+  assert.match(event.data.summary, /^High tide now at /);
+  assert.match(event.data.summary_fr, /^Pleine mer maintenant à /);
+});
+
+test('the state is saved at shutdown; /data is read once, not at every start', async (t) => {
+  let loads = 0;
+  let saves = 0;
+  const storage = {
+    load: async () => {
+      loads += 1;
+      return undefined;
+    },
+    save: async () => {
+      saves += 1;
+    },
+  };
+  const { app, clock } = await setup(t, { storage });
+  await app.start({ stations: '97120' });
+  await drain(app, clock);
+  await app.start({ stations: '97120' });
+  await drain(app, clock);
+  assert.equal(loads, 1);
+  const before = saves;
+  await app.shutdown();
+  assert.equal(saves, before + 1);
+});
+
+test('from /data: a pending event without a believable tide time is dropped', () => {
+  const raw = saveState(emptyState());
+  raw.pending = [
+    { key: 'tide_coming', at: FIXTURE_NOW, tideAt: 5, data: {} },
+    { key: 'tide_coming', at: FIXTURE_NOW, tideAt: FIXTURE_NOW + H, data: {} },
+  ];
+  assert.equal(loadState(raw, FIXTURE_NOW).pending.length, 1);
+});
