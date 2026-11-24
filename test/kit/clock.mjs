@@ -87,9 +87,9 @@ export function testClock({ start = Date.UTC(2026, 0, 1), step = 0.001 } = {}) {
  * simulated ms, timers shortened by `speed`. `close()` clears the timers
  * still pending; `timersSet` counts the timers the app asked for.
  */
-export function realClock({ speed = 1 } = {}) {
+export function realClock({ speed = 1, start = Date.now() } = {}) {
   const p0 = performance.now();
-  const w0 = Date.now();
+  const w0 = start;
   const live = new Set();
   const wrap =
     (set, clear, repeat) =>

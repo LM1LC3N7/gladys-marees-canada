@@ -18,6 +18,8 @@ import { measurePeriod, realClock, spyOn } from './kit/index.mjs';
 
 const SPEED = 20;
 const POLL_MINUTES = 5;
+// The captures' date (helpers/iwls.js is not imported: it blocks the network).
+const FIXTURE_NOW = Date.parse('2026-10-29T21:16:29Z');
 const fixture = (name) =>
   JSON.parse(readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8'));
 
@@ -53,7 +55,8 @@ test('real clock: observations at 0, the interval, twice the interval; requests 
     }, 5);
   });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
-  const clock = realClock({ speed: SPEED });
+  // The wall clock starts at the captures' date: they would be stale today.
+  const clock = realClock({ speed: SPEED, start: FIXTURE_NOW });
   const gladys = createFakeGladys({ selector: 'marees-canada', config: {} });
   await gladys.connect();
   const quiet = () => {};
